@@ -1,8 +1,29 @@
-import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+import Head from 'next/head';
+import { useState } from 'react';
+import Header from '@components/Header';
+import Footer from '@components/Footer';
 
 export default function Home() {
+  const [responseText, setResponseText] = useState('');
+
+  const handleButtonClick = async () => {
+    try {
+      const response = await fetch('https://cross-gateway.conexia.com/login/api', {
+        method: 'GET', // Puedes cambiar el método según las necesidades
+        headers: {
+          'Content-Type': 'application/json',
+          // Agrega otros encabezados si es necesario
+        },
+        // Agrega el cuerpo de la solicitud si es necesario
+      });
+
+      const responseData = await response.json();
+      setResponseText(JSON.stringify(responseData, null, 2));
+    } catch (error) {
+      setResponseText(`Error: ${error.message}`);
+    }
+  };
+
   return (
     <div className="container">
       <Head>
@@ -15,9 +36,14 @@ export default function Home() {
         <p className="description">
           Get started by editing <code>pages/index.js</code>
         </p>
+
+        {/* Modificar botón y textarea */}
+        <button onClick={handleButtonClick}>Realizar Solicitud a la API</button>
+        <textarea value={responseText} readOnly />
+
       </main>
 
       <Footer />
     </div>
-  )
+  );
 }
