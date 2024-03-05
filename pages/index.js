@@ -8,13 +8,18 @@ export default function Home() {
 
   const handleButtonClick = async () => {
     try {
+      const credentials = {
+        username: '6tp2r4in2naoiq6p7a07m01laa',
+        password: '1epguv5pso4m2sd2523tgrn6p1qv1l0m751ebp0amntneekduhs2',
+      };
+
       const response = await fetch('https://cross-gateway.conexia.com/login/api', {
-        method: 'GET', // Puedes cambiar el método según las necesidades
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Agrega otros encabezados si es necesario
+          // Puedes agregar otros encabezados si es necesario
         },
-        // Agrega el cuerpo de la solicitud si es necesario
+        body: JSON.stringify(credentials),
       });
 
       const responseData = await response.json();
