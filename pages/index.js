@@ -13,7 +13,10 @@ export default function Home() {
         password: '1epguv5pso4m2sd2523tgrn6p1qv1l0m751ebp0amntneekduhs2',
       };
 
-      const response = await fetch('https://cross-gateway.conexia.com/login/api', {
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      const apiUrl = 'https://cross-gateway.conexia.com/login/api';
+
+      const response = await fetch(proxyUrl + apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +35,7 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Next.js Starter!</title>
+        <title>Tope Copagos</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
