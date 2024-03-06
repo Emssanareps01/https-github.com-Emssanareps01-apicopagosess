@@ -4,7 +4,7 @@ import Header from '@components/Header';
 import Footer from '@components/Footer';
 
 export default function Home() {
-  const [responseText, setResponseText] = useState('');
+  const [response, setResponse] = useState({});
   const [token, setToken] = useState('');
   const [tipoDocumento, setTipoDocumento] = useState('CC');
   const [numeroDocumento, setNumeroDocumento] = useState('5544728');
@@ -59,10 +59,25 @@ export default function Home() {
       });
 
       const copagosData = await copagosResponse.json();
-      setResponseText(JSON.stringify(copagosData, null, 2));
+      setResponse(copagosData);
     } catch (error) {
       setResponseText(`Error al consultar copagos: ${error.message}`);
     }
+  };
+
+  const renderResponseDetails = () => {
+    return (
+      <div>
+        <p>Tipo de Documento: {response.tipoDocumento}</p>
+        <p>Número de Documento: {response.numeroDocumento}</p>
+        <p>Fecha de Nacimiento: {response.fechaNacimiento}</p>
+        <p>Total Copago Generado: {response.totalCopagoGenerado}</p>
+        <p>Total Copago Cancelado: {response.totalCopagoCancelado}</p>
+        <p>Tope Máximo Evento: {response.topeMaximoEvento}</p>
+        <p>Tope Máximo Anual: {response.topeMaximoAnual}</p>
+        <p>Exento Copago: {response.exentoCopago ? 'Sí' : 'No'}</p>
+      </div>
+    );
   };
 
   return (
@@ -97,7 +112,12 @@ export default function Home() {
         </form>
 
         <button onClick={consultarCopagos}>Consultar Copagos</button>
-        <textarea value={responseText} readOnly />
+
+        {/* Mostrar detalles de la respuesta */}
+        {Object.keys(response).length > 0 && renderResponseDetails()}
+
+        {/* Mostrar respuesta completa en formato JSON */}
+        <textarea value={JSON.stringify(response, null, 2)} readOnly />
       </main>
 
       <Footer />
