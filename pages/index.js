@@ -5,6 +5,7 @@ import Footer from '@components/Footer';
 
 export default function Home() {
   const [responseText, setResponseText] = useState('');
+  const [token, setToken] = useState('');
 
   const handleButtonClick = async () => {
     try {
@@ -23,9 +24,42 @@ export default function Home() {
       });
 
       const responseData = await response.json();
-      setResponseText(JSON.stringify(responseData, null, 2));
+
+      // Guardar el token en la variable de estado
+      if (responseData.access_token) {
+        setToken(responseData.access_token);
+        setResponseText('Token obtenido correctamente.');
+      } else {
+        setResponseText('Error al obtener el token.');
+      }
     } catch (error) {
       setResponseText(`Error: ${error.message}`);
+    }
+  };
+
+  const handleConsultaCopagos = async () => {
+    try {
+      // Parámetros para la solicitud
+      const parametrosConsulta = {
+        TipoDocumento: 'CC',
+        NumeroDocumento: '5544728',
+        fechaNacimiento: '1939-11-04',
+      };
+
+      // Realiza la solicitud a la API de consulta de copagos con el token
+      const response = await fetch('https://emssanar-gateway.conexia.com/api/integraciones/consultar-copagos-afiliado', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Utiliza el token almacenado
+        },
+        body: JSON.stringify(parametrosConsulta),
+      });
+
+      const responseData = await response.json();
+      setResponseText(JSON.stringify(responseData, null, 2));
+    } catch (error) {
+      setResponseText(`Error al consultar copagos: ${error.message}`);
     }
   };
 
@@ -43,7 +77,8 @@ export default function Home() {
         </p>
 
         {/* Modificar botón y textarea */}
-        <button onClick={handleButtonClick}>Realizar Solicitud a la API</button>
+        <button onClick={handleButtonClick}>Obtener Token</button>
+        <button onClick={handleConsultaCopagos}>Consultar Copagos</button>
         <textarea value={responseText} readOnly />
 
       </main>
