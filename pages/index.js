@@ -10,31 +10,39 @@ export default function Home() {
   const [numeroDocumento, setNumeroDocumento] = useState('5544728');
   const [fechaNacimiento, setFechaNacimiento] = useState('1939-11-04');
 
+  const obtenerToken = async () => {
+    try {
+      const credentials = {
+        username: '1lerkbvv9bblni5kvs3ffiovtd',
+        password: '1qh8dk63cerdj0ptca1oh1hbsjepurs6qak5vh420cntm2k92i13',
+      };
+
+      const response = await fetch('https://cross-gateway.conexia.com/uat/login/api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.access_token) {
+        setToken(responseData.access_token);
+        setResponseText('Token obtenido correctamente.');
+      } else {
+        setResponseText('Error al obtener el token.');
+      }
+    } catch (error) {
+      setResponseText(`Error al obtener el token: ${error.message}`);
+    }
+  };
+
   const consultarCopagos = async () => {
     try {
       if (!token) {
-        const credentials = {
-          username: '1lerkbvv9bblni5kvs3ffiovtd',
-          password: '1qh8dk63cerdj0ptca1oh1hbsjepurs6qak5vh420cntm2k92i13',
-        };
-
-        const response = await fetch('https://cross-gateway.conexia.com/uat/login/api', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(credentials),
-        });
-
-        const responseData = await response.json();
-
-        if (responseData.access_token) {
-          setToken(responseData.access_token);
-          setResponseText('Token obtenido correctamente.');
-        } else {
-          setResponseText('Error al obtener el token.');
-          return;
-        }
+        await obtenerToken();
+        // Podrías manejar aquí lógica adicional después de obtener el token, si es necesario
       }
 
       const parametrosConsulta = {
@@ -55,7 +63,7 @@ export default function Home() {
       const copagosData = await copagosResponse.json();
       setResponseText(JSON.stringify(copagosData, null, 2));
     } catch (error) {
-      setResponseText(`Error: ${error.message}`);
+      setResponseText(`Error al consultar copagos: ${error.message}`);
     }
   };
 
