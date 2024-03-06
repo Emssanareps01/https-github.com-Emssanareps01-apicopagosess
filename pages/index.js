@@ -65,21 +65,6 @@ export default function Home() {
     }
   };
 
-  const renderResponseDetails = () => {
-    return (
-      <div>
-        <p>Tipo de Documento: {response.tipoDocumento}</p>
-        <p>Número de Documento: {response.numeroDocumento}</p>
-        <p>Fecha de Nacimiento: {response.fechaNacimiento}</p>
-        <p>Total Copago Generado: {response.totalCopagoGenerado}</p>
-        <p>Total Copago Cancelado: {response.totalCopagoCancelado}</p>
-        <p>Tope Máximo Evento: {response.topeMaximoEvento}</p>
-        <p>Tope Máximo Anual: {response.topeMaximoAnual}</p>
-        <p>Exento Copago: {response.exentoCopago ? 'Sí' : 'No'}</p>
-      </div>
-    );
-  };
-
   return (
     <div className="container">
       <Head>
@@ -93,7 +78,7 @@ export default function Home() {
           Test <code>solicitud/index.js</code>
         </p>
 
-        {/* Modificar formulario y textarea */}
+        {/* Modificar formulario y div para mostrar la respuesta */}
         <form>
           <label>
             Tipo de Documento:
@@ -113,11 +98,19 @@ export default function Home() {
 
         <button onClick={consultarCopagos}>Consultar Copagos</button>
 
-        {/* Mostrar detalles de la respuesta */}
-        {Object.keys(response).length > 0 && renderResponseDetails()}
-
-        {/* Mostrar respuesta completa en formato JSON */}
-        <textarea value={JSON.stringify(response, null, 2)} readOnly />
+        {/* Mostrar detalles de la respuesta en elementos div */}
+        {Object.keys(response).length > 0 && (
+          <div>
+            <p>Tipo de Documento: {response.tipoDocumento}</p>
+            <p>Número de Documento: {response.numeroDocumento}</p>
+            <p>Fecha de Nacimiento: {response.fechaNacimiento}</p>
+            <p>Total Copago Generado: {response.totalCopagoGenerado}</p>
+            <p>Total Copago Cancelado: {response.totalCopagoCancelado}</p>
+            <p>Tope Máximo Evento: {response.topeMaximoEvento}</p>
+            <p>Tope Máximo Anual: {response.topeMaximoAnual}</p>
+            <p>Exento Copago: {response.exentoCopago ? 'Sí' : 'No'}</p>
+          </div>
+        )}
       </main>
 
       <Footer />
