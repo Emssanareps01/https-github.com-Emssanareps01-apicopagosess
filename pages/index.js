@@ -53,29 +53,7 @@ export default function Home() {
       });
 
       const copagosData = await copagosResponse.json();
-
-      // Organizar la respuesta por separado
-      const {
-        numeroDocumento,
-        fechaNacimiento,
-        totalCopagoGenerado,
-        totalCopagoCancelado,
-        topeMaximoEvento,
-        topeMaximoAnual,
-        exentoCopago,
-      } = copagosData;
-
-      const organizedData = {
-        NumeroDocumento: numeroDocumento,
-        FechaNacimiento: fechaNacimiento,
-        TotalCopagoGenerado: totalCopagoGenerado,
-        TotalCopagoCancelado: totalCopagoCancelado,
-        TopeMaximoEvento: topeMaximoEvento,
-        TopeMaximoAnual: topeMaximoAnual,
-        ExentoCopago: exentoCopago,
-      };
-
-      setResponseText(JSON.stringify(organizedData, null, 2));
+      setResponseText(JSON.stringify(copagosData, null, 2));
     } catch (error) {
       setResponseText(`Error: ${error.message}`);
     }
