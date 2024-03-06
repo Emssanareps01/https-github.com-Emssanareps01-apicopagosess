@@ -43,7 +43,7 @@ export default function Home() {
         fechaNacimiento: fechaNacimiento,
       };
 
-      const copagosResponse = await fetch('https://emssanar-gateway.conexia.com/api/integraciones/consultar-copagos-afiliado', {
+      const copagosResponse = await fetch('https://emssanar-gateway.conexia.com/uat/api/integraciones/consultar-copagos-afiliado', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
