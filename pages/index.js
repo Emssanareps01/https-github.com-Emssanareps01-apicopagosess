@@ -40,10 +40,8 @@ export default function Home() {
 
   const consultarCopagos = async () => {
     try {
-      if (!token) {
-        await obtenerToken();
-        // Podrías manejar aquí lógica adicional después de obtener el token, si es necesario
-      }
+      // Obtener un nuevo token en cada consulta
+      await obtenerToken();
 
       const parametrosConsulta = {
         TipoDocumento: tipoDocumento,
