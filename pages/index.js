@@ -6,6 +6,9 @@ import Footer from '@components/Footer';
 export default function Home() {
   const [responseText, setResponseText] = useState('');
   const [token, setToken] = useState('');
+  const [tipoDocumento, setTipoDocumento] = useState('CC');
+  const [numeroDocumento, setNumeroDocumento] = useState('5544728');
+  const [fechaNacimiento, setFechaNacimiento] = useState('1939-11-04');
 
   const consultarCopagos = async () => {
     try {
@@ -35,9 +38,9 @@ export default function Home() {
       }
 
       const parametrosConsulta = {
-        TipoDocumento: 'CC',
-        NumeroDocumento: '5544728',
-        fechaNacimiento: '1939-11-04',
+        TipoDocumento: tipoDocumento,
+        NumeroDocumento: numeroDocumento,
+        fechaNacimiento: fechaNacimiento,
       };
 
       const copagosResponse = await fetch('https://emssanar-gateway.conexia.com/api/integraciones/consultar-copagos-afiliado', {
@@ -69,7 +72,24 @@ export default function Home() {
           Test <code>solicitud/index.js</code>
         </p>
 
-        {/* Modificar botones y textarea */}
+        {/* Modificar formulario y textarea */}
+        <form>
+          <label>
+            Tipo de Documento:
+            <input type="text" value={tipoDocumento} onChange={(e) => setTipoDocumento(e.target.value)} />
+          </label>
+          <br />
+          <label>
+            Número de Documento:
+            <input type="text" value={numeroDocumento} onChange={(e) => setNumeroDocumento(e.target.value)} />
+          </label>
+          <br />
+          <label>
+            Fecha de Nacimiento:
+            <input type="text" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />
+          </label>
+        </form>
+
         <button onClick={consultarCopagos}>Consultar Copagos</button>
         <textarea value={responseText} readOnly />
       </main>
