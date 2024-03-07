@@ -1,0 +1,8 @@
+{
+    "/api/*": {
+      "target": "https://cross-gateway.conexia.com/login/api",
+      "secure": true,
+      "logLevel": "debug",
+      "changeOrigin": true
+    }
+  }
