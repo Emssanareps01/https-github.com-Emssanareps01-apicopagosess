@@ -6,11 +6,11 @@ import Footer from '@components/Footer';
 const obtenerToken = async () => {
   try {
     const credentials = {
-      username: '1lerkbvv9bblni5kvs3ffiovtd',
-      password: '1qh8dk63cerdj0ptca1oh1hbsjepurs6qak5vh420cntm2k92i13',
+      username: '6tp2r4in2naoiq6p7a07m01laa',
+      password: '1epguv5pso4m2sd2523tgrn6p1qv1l0m751ebp0amntneekduhs2',
     };
 
-    const response = await fetch('https://cross-gateway.conexia.com/uat/login/api', {
+    const response = await fetch('https://cross-gateway.conexia.com/login/api', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const consultarCopagos = async (token, tipoDocumento, numeroDocumento, fechaNaci
       fechaNacimiento: fechaNacimiento,
     };
 
-    const copagosResponse = await fetch('https://emssanar-gateway.conexia.com/uat/api/integraciones/consultar-copagos-afiliado', {
+    const copagosResponse = await fetch('https://emssanar-gateway.conexia.com/api/integraciones/consultar-copagos-afiliado', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
